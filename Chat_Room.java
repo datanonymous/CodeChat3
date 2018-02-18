@@ -98,12 +98,12 @@ public class Chat_Room extends AppCompatActivity {
         root.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                append_chat_conversation(dataSnapshot);
+                displayChatMessages();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                append_chat_conversation(dataSnapshot);
+                displayChatMessages();
             }
 
             @Override
@@ -157,8 +157,7 @@ public class Chat_Room extends AppCompatActivity {
 
                 chatItemSelected = adapter.getItem(position); // get the position of https://stackoverflow.com/questions/42073899/how-to-display-the-keys-from-a-firebase-database-with-android
                 itemSelected = chatItemSelected.getMessageText();
-
-                //decryptedText = new Decrypt(); // DECRYPTED OUTPUT IS THE INSTANTIATED CLASS.  USING THE INSTANTIATED CLASS, CALL DECRYPT METHOD ON TEXT SELECTED
+                decryptedText = new Decrypt(); // DECRYPTED OUTPUT IS THE INSTANTIATED CLASS.  USING THE INSTANTIATED CLASS, CALL DECRYPT METHOD ON TEXT SELECTED
                 Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected),Toast.LENGTH_SHORT).show();
 
                 return false;
@@ -174,15 +173,22 @@ public class Chat_Room extends AppCompatActivity {
 
     public void buttonClicked(View view){
 
-        String codedText;
+        String codedText = "";
+        encryptedText = new Encrypt();
         codedText = encryptedText.Encrypt(input.getText().toString());
 
-        // Read the input field and push a new instance
-        // of ChatMessage to the Firebase database
-        root.push().setValue(new ChatMessage(codedText,user_name));
+        if(codedText == "") { // This is to prevent blank information for getting entered
+            Toast.makeText(this, "Please enter text into input field...", Toast.LENGTH_SHORT).show();
+        } else{
 
-        // Clear the input
-        input.setText("");
+            // Read the input field and push a new instance
+            // of ChatMessage to the Firebase database
+            root.push().setValue(new ChatMessage(codedText, user_name));
+
+            // Clear the input
+            input.setText("");
+        }
+
     }
 
 
