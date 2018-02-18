@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     // https://www.youtube.com/watch?v=wVCz1a3ogqk&feature=youtu.be
     // https://www.youtube.com/watch?v=PkoGCNtukRU&index=3&list=PLGCjwl1RrtcTXrWuRTa59RyRmQ4OedWrt
+    // https://code.tutsplus.com/tutorials/how-to-create-an-android-chat-app-using-firebase--cms-27397
 
     private FloatingActionButton add_room;
     private EditText room_name;
