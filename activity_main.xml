@@ -33,6 +33,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:clickable="true"
+        android:tint="@color/buttonTextColor"
+        app:fabSize="mini"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </RelativeLayout>
