@@ -11,12 +11,13 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/list_of_messages"
         android:clickable="true"
-        android:focusable="auto"
+        android:focusable="true"
         android:onClick="buttonClicked"
         android:tint="@color/buttonTextColor"
+        app:fabSize="mini"
         app:srcCompat="@android:drawable/ic_secure" />
 
     <EditText
@@ -26,7 +27,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/fab"
-        android:hint="Input your text here:" />
+        android:hint="@string/input_your_text_here" />
 
     <ListView
         android:id="@+id/list_of_messages"
