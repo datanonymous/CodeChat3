@@ -90,6 +90,24 @@ public class Decrypt {
                     case '\"':
                         Newstr = Newstr + "Z";
                         break;
+
+
+
+                    case ' ':
+                        Newstr = Newstr + " ";
+                        break;
+                    case '.':
+                        Newstr = Newstr + '3';
+                        break;
+
+
+
+
+
+
+
+
+
                     case '1':
                         Newstr = Newstr + "r";
                         break;
@@ -120,6 +138,10 @@ public class Decrypt {
                     case '0':
                         Newstr = Newstr + "z";
                         break;
+
+
+
+
                     default:
                         Newstr = Newstr + "0";
                         break;
