@@ -93,36 +93,20 @@ public class Encrypt {
                     case 'z':
                         Newstr = Newstr + "\"";
                         break;
+
+
+
                     case ' ':
                         Newstr = Newstr + " ";
                         break;
                     case '.':
                         Newstr = Newstr + '3';
                         break;
-                    case ',':
-                        Newstr = Newstr + "1";
-                        break;
-                    case '(':
-                        Newstr = Newstr + '4';
-                        break;
-                    case '\"':
-                        Newstr = Newstr + '5';
-                        break;
-                    case ')':
-                        Newstr = Newstr + "7";
-                        break;
-                    case '?':
-                        Newstr = Newstr + "2";
-                        break;
-                    case '!':
-                        Newstr = Newstr + "8";
-                        break;
-                    case '-':
-                        Newstr = Newstr + "6";
-                        break;
-                    case '%':
-                        Newstr = Newstr + "9";
-                        break;
+
+
+
+
+
                     case '1':
                         Newstr = Newstr + "r";
                         break;
@@ -153,6 +137,11 @@ public class Encrypt {
                     case '0':
                         Newstr = Newstr + "z";
                         break;
+
+
+
+
+
                     default:
                         Newstr = Newstr + "0";
                         break;
