@@ -177,24 +177,19 @@ public class Chat_Room extends AppCompatActivity {
 
         String codedText = "";
         encryptedText = new Encrypt();
-        codedText = encryptedText.Encrypt(input.getText().toString(), Integer.parseInt(seedNum.getText().toString()));
 
-        if(seedNum.getText().toString() != "") {
+        if(seedNum.getText().toString() == "" || codedText == "") {
+            Toast.makeText(this, "Please ensure that there are values for each of the fields below...", Toast.LENGTH_SHORT).show();
+        } else {
 
-            if (codedText == "") { // This is to prevent blank information for getting entered
-                Toast.makeText(this, "Please enter text into input field...", Toast.LENGTH_SHORT).show();
-            } else {
+            codedText = encryptedText.Encrypt(input.getText().toString(), Integer.parseInt(seedNum.getText().toString()));
 
-                // Read the input field and push a new instance
-                // of ChatMessage to the Firebase database
-                root.push().setValue(new ChatMessage(codedText, user_name));
+            // Read the input field and push a new instance
+            // of ChatMessage to the Firebase database
+            root.push().setValue(new ChatMessage(codedText, user_name));
 
-                // Clear the input
-                input.setText("");
-            }
-
-        } else{
-            Toast.makeText(this, "Please enter an integer value into the seed number field...", Toast.LENGTH_SHORT).show();
+            // Clear the input
+            input.setText("");
         }
 
     }
