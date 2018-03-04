@@ -33,7 +33,7 @@ public class Chat_Room extends AppCompatActivity {
     private String user_name, room_name;
 
     private DatabaseReference root;
-    private String temp_key;
+    //private String temp_key;
 
     // Instantiate encrypt and decrypt classes
     private Encrypt encryptedText = new Encrypt();
@@ -51,6 +51,7 @@ public class Chat_Room extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private EditText input;
+    private EditText seedNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){ // removed @Nullable Bundle savedInstanceState
@@ -64,6 +65,7 @@ public class Chat_Room extends AppCompatActivity {
         listOfMessages = findViewById(R.id.list_of_messages);
         fab = findViewById(R.id.fab);
         input = findViewById(R.id.input);
+        seedNum = findViewById(R.id.seedInput);
 
         user_name = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
@@ -158,7 +160,7 @@ public class Chat_Room extends AppCompatActivity {
                 chatItemSelected = adapter.getItem(position); // get the position of https://stackoverflow.com/questions/42073899/how-to-display-the-keys-from-a-firebase-database-with-android
                 itemSelected = chatItemSelected.getMessageText();
                 decryptedText = new Decrypt(); // DECRYPTED OUTPUT IS THE INSTANTIATED CLASS.  USING THE INSTANTIATED CLASS, CALL DECRYPT METHOD ON TEXT SELECTED
-                Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected, Integer.parseInt(seedNum.getText().toString())),Toast.LENGTH_SHORT).show();
 
                 return false;
             }
@@ -175,18 +177,24 @@ public class Chat_Room extends AppCompatActivity {
 
         String codedText = "";
         encryptedText = new Encrypt();
-        codedText = encryptedText.Encrypt(input.getText().toString());
+        codedText = encryptedText.Encrypt(input.getText().toString(), Integer.parseInt(seedNum.getText().toString()));
 
-        if(codedText == "") { // This is to prevent blank information for getting entered
-            Toast.makeText(this, "Please enter text into input field...", Toast.LENGTH_SHORT).show();
+        if(seedNum.getText().toString() != "") {
+
+            if (codedText == "") { // This is to prevent blank information for getting entered
+                Toast.makeText(this, "Please enter text into input field...", Toast.LENGTH_SHORT).show();
+            } else {
+
+                // Read the input field and push a new instance
+                // of ChatMessage to the Firebase database
+                root.push().setValue(new ChatMessage(codedText, user_name));
+
+                // Clear the input
+                input.setText("");
+            }
+
         } else{
-
-            // Read the input field and push a new instance
-            // of ChatMessage to the Firebase database
-            root.push().setValue(new ChatMessage(codedText, user_name));
-
-            // Clear the input
-            input.setText("");
+            Toast.makeText(this, "Please enter an integer value into the seed number field...", Toast.LENGTH_SHORT).show();
         }
 
     }
