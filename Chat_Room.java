@@ -3,6 +3,7 @@ package ko.alex.enigmachat3;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,7 +52,7 @@ public class Chat_Room extends AppCompatActivity {
 
     private FloatingActionButton fab;
     private EditText input;
-    private EditText seedNum;
+    private EditText seedInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){ // removed @Nullable Bundle savedInstanceState
@@ -65,7 +66,7 @@ public class Chat_Room extends AppCompatActivity {
         listOfMessages = findViewById(R.id.list_of_messages);
         fab = findViewById(R.id.fab);
         input = findViewById(R.id.input);
-        seedNum = findViewById(R.id.seedInput);
+        seedInput = findViewById(R.id.seedInput);
 
         user_name = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
@@ -160,7 +161,7 @@ public class Chat_Room extends AppCompatActivity {
                 chatItemSelected = adapter.getItem(position); // get the position of https://stackoverflow.com/questions/42073899/how-to-display-the-keys-from-a-firebase-database-with-android
                 itemSelected = chatItemSelected.getMessageText();
                 decryptedText = new Decrypt(); // DECRYPTED OUTPUT IS THE INSTANTIATED CLASS.  USING THE INSTANTIATED CLASS, CALL DECRYPT METHOD ON TEXT SELECTED
-                Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected, Integer.parseInt(seedNum.getText().toString())),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected, Integer.parseInt(seedInput.getText().toString())),Toast.LENGTH_SHORT).show();
 
                 return false;
             }
@@ -178,11 +179,11 @@ public class Chat_Room extends AppCompatActivity {
         String codedText = "";
         encryptedText = new Encrypt();
 
-        if(seedNum.getText().toString() == "" || codedText == "") {
+        if(TextUtils.isEmpty(seedInput.getText().toString()) || TextUtils.isEmpty(input.getText().toString())) {  // use TextUtils.isEmpty(edittext) to check if edittext is empty
             Toast.makeText(this, "Please ensure that there are values for each of the fields below...", Toast.LENGTH_SHORT).show();
         } else {
 
-            codedText = encryptedText.Encrypt(input.getText().toString(), Integer.parseInt(seedNum.getText().toString()));
+            codedText = encryptedText.Encrypt(input.getText().toString(), Integer.parseInt(seedInput.getText().toString()));
 
             // Read the input field and push a new instance
             // of ChatMessage to the Firebase database
