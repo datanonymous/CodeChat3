@@ -17,7 +17,7 @@ public class Encrypt {
                 ch = key.charAt(i);
                 ch += newSeed;
                 result += ch;
-                newSeed += 1;
+                newSeed += i;
             }
 
         } catch (Exception io) {
