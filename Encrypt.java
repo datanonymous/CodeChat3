@@ -9,18 +9,19 @@ public class Encrypt {
         String result = "";
         int len = key.length();
         char ch;
+        int newSeed = seedNum % 101;
 
         try {
 
             for(int i = 0; i < len; i++){
                 ch = key.charAt(i);
-                ch += seedNum;
+                ch += newSeed;
                 result += ch;
-                seedNum += 1;
+                newSeed += 1;
             }
 
-        } catch (Exception ioe) {
-            ioe.printStackTrace();
+        } catch (Exception io) {
+            io.printStackTrace();
         }
         return result;
     }
