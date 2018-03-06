@@ -161,7 +161,15 @@ public class Chat_Room extends AppCompatActivity {
                 chatItemSelected = adapter.getItem(position); // get the position of https://stackoverflow.com/questions/42073899/how-to-display-the-keys-from-a-firebase-database-with-android
                 itemSelected = chatItemSelected.getMessageText();
                 decryptedText = new Decrypt(); // DECRYPTED OUTPUT IS THE INSTANTIATED CLASS.  USING THE INSTANTIATED CLASS, CALL DECRYPT METHOD ON TEXT SELECTED
-                Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected, Integer.parseInt(seedInput.getText().toString())),Toast.LENGTH_SHORT).show();
+
+
+                // check to ensure that there is a seed value for decryption
+                if(TextUtils.isEmpty(seedInput.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "Please enter a seed number for decryption", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected, Integer.parseInt(seedInput.getText().toString())),Toast.LENGTH_SHORT).show();
+                }
+
 
                 return false;
             }
@@ -180,7 +188,7 @@ public class Chat_Room extends AppCompatActivity {
         encryptedText = new Encrypt();
 
         if(TextUtils.isEmpty(seedInput.getText().toString()) || TextUtils.isEmpty(input.getText().toString())) {  // use TextUtils.isEmpty(edittext) to check if edittext is empty
-            Toast.makeText(this, "Please ensure that there are values for each of the fields below...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please ensure that there are values for each of the fields below...", Toast.LENGTH_SHORT).show();
         } else {
 
             codedText = encryptedText.Encrypt(input.getText().toString(), Integer.parseInt(seedInput.getText().toString()));
