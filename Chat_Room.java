@@ -37,8 +37,11 @@ public class Chat_Room extends AppCompatActivity {
     //private String temp_key;
 
     // Instantiate encrypt and decrypt classes
-    private Encrypt encryptedText = new Encrypt();
-    private Decrypt decryptedText = new Decrypt();
+//    private Encrypt encryptedText = new Encrypt();
+//    private Decrypt decryptedText = new Decrypt();
+
+    // BitShifter has the Encrypt and Decrypt methods...
+    private BitShifter bitShifter = new BitShifter();
 
     private FirebaseListAdapter<ChatMessage> adapter;
 
@@ -75,6 +78,9 @@ public class Chat_Room extends AppCompatActivity {
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
 
         displayChatMessages();
+
+        // Let user know that if seed number is 0, normal chat function can occur without encryption
+        Toast.makeText(getApplicationContext(),"Hey " + user_name + "!  Did you know that if you set Seed Num to 0, encryption will not occur?",Toast.LENGTH_LONG).show();
 
 //        btn_send_msg.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -160,16 +166,15 @@ public class Chat_Room extends AppCompatActivity {
 
                 chatItemSelected = adapter.getItem(position); // get the position of https://stackoverflow.com/questions/42073899/how-to-display-the-keys-from-a-firebase-database-with-android
                 itemSelected = chatItemSelected.getMessageText();
-                decryptedText = new Decrypt(); // DECRYPTED OUTPUT IS THE INSTANTIATED CLASS.  USING THE INSTANTIATED CLASS, CALL DECRYPT METHOD ON TEXT SELECTED
+                //decryptedText = new Decrypt(); // DECRYPTED OUTPUT IS THE INSTANTIATED CLASS.  USING THE INSTANTIATED CLASS, CALL DECRYPT METHOD ON TEXT SELECTED
 
 
                 // check to ensure that there is a seed value for decryption
                 if(TextUtils.isEmpty(seedInput.getText().toString())) {
                     Toast.makeText(getApplicationContext(), "Please enter a seed number for decryption", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  decryptedText.Decrypt(itemSelected, Integer.parseInt(seedInput.getText().toString())),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),"DECRYPTED OUTPUT: " +  bitShifter.Decrypt(itemSelected, Integer.parseInt(seedInput.getText().toString())),Toast.LENGTH_SHORT).show();
                 }
-
 
                 return false;
             }
@@ -185,13 +190,18 @@ public class Chat_Room extends AppCompatActivity {
     public void buttonClicked(View view){
 
         String codedText = "";
-        encryptedText = new Encrypt();
+        //encryptedText = new Encrypt();
 
         if(TextUtils.isEmpty(seedInput.getText().toString()) || TextUtils.isEmpty(input.getText().toString())) {  // use TextUtils.isEmpty(edittext) to check if edittext is empty
-            Toast.makeText(getApplicationContext(), "Please ensure that there are values for each of the fields below...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please ensure that there are values for each of the fields below...",Toast.LENGTH_SHORT).show();
+        } else if(Integer.parseInt(seedInput.getText().toString()) > 1000000000) { // program can't handle seed numbers greater than 1 billion
+            Toast.makeText(getApplicationContext(), "Please enter a seed number less than 1 billion",Toast.LENGTH_SHORT).show();
+        } else if(Integer.parseInt(seedInput.getText().toString()) == 0){ // if seed is 0, don't encrypt
+            root.push().setValue(new ChatMessage(input.getText().toString(), user_name));
+            // Clear the input
+            input.setText("");
         } else {
-
-            codedText = encryptedText.Encrypt(input.getText().toString(), Integer.parseInt(seedInput.getText().toString()));
+            codedText = bitShifter.Encrypt(input.getText().toString(), Integer.parseInt(seedInput.getText().toString()));
 
             // Read the input field and push a new instance
             // of ChatMessage to the Firebase database
