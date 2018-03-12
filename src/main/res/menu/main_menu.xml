@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="@string/item_1"
+        android:id="@+id/item1_id" />
+    <item
+        android:title="@string/item_2"
+        android:id="@+id/item2_id" />
+    <item
+        android:title="@string/item_3"
+        android:id="@+id/item3_id" />
+
+    <item
+        android:title=""
+        android:id="@+id/cat"
+        android:icon="@drawable/cat"
+        app:showAsAction="always"/>
+
+    <item
+        android:title=""
+        android:id="@+id/qrcodescan"
+        android:icon="@drawable/qrcodescan"
+        app:showAsAction="always"/>
+
+</menu>

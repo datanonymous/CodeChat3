@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ko.alex.enigmachat3.Chat_Room">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="buttonClicked"
+        android:tint="@color/buttonTextColor"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_secure" />
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/seedInput"
+        android:layout_alignBottom="@+id/seedInput"
+        android:layout_toStartOf="@+id/fab"
+        android:hint="@string/input_your_text_here" />
+
+    <EditText
+        android:id="@+id/seedInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/input"
+        android:ems="10"
+        android:hint="@string/seed"
+        android:inputType="number" />
+
+    <ListView
+        android:id="@+id/list_of_messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/input"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="16dp">
+
+    </ListView>
+
+</RelativeLayout>
