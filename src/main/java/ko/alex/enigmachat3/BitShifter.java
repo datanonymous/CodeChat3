@@ -4,12 +4,12 @@ package ko.alex.enigmachat3;
 
 public class BitShifter {
 
-    public String Encrypt(String key, int seedNum) {
+    public String Encrypt(String key, long seedNum) {
 
         String result = "";
         int len = key.length();
         char ch;
-        int newSeed = seedNum % 101;
+        long newSeed = seedNum % 101;
 
         try {
 
@@ -17,7 +17,7 @@ public class BitShifter {
                 ch = key.charAt(i);
                 ch += newSeed;
                 result += ch;
-                newSeed += i;
+                newSeed += i+1;
             }
 
         } catch (Exception io) {
@@ -26,12 +26,12 @@ public class BitShifter {
         return result;
     }
 
-    public String Decrypt(String key, int seedNum) {
+    public String Decrypt(String key, long seedNum) {
 
         String result = "";
         int len = key.length();
         char ch;
-        int newSeed = seedNum % 101;
+        long newSeed = seedNum % 101;
 
         try {
 
@@ -39,7 +39,7 @@ public class BitShifter {
                 ch = key.charAt(i);
                 ch -= newSeed;
                 result += ch;
-                newSeed += i;
+                newSeed += i+1;
             }
 
         } catch (Exception io) {

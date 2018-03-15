@@ -204,14 +204,14 @@ public class Chat_Room extends AppCompatActivity {
 
         if(TextUtils.isEmpty(seedInput.getText().toString()) || TextUtils.isEmpty(input.getText().toString())) {  // use TextUtils.isEmpty(edittext) to check if edittext is empty
             Toast.makeText(getApplicationContext(), "Please ensure that there are values for each of the fields below...",Toast.LENGTH_SHORT).show();
-        } else if(Integer.parseInt(seedInput.getText().toString()) > 1000000000) { // program can't handle seed numbers greater than 1 billion
-            Toast.makeText(getApplicationContext(), "Please enter a seed number less than 1 billion",Toast.LENGTH_SHORT).show();
-        } else if(Integer.parseInt(seedInput.getText().toString()) == 0){ // if seed is 0, don't encrypt
+        } else if(Long.parseLong(seedInput.getText().toString()) > 9000000000000000000L) { // program can't handle seed numbers greater than 9 million million million (9 quintillion)
+            Toast.makeText(getApplicationContext(), "Please enter a seed number less than 9 million million million (9 quintillion)!",Toast.LENGTH_SHORT).show();
+        } else if(Long.parseLong(seedInput.getText().toString()) == 0){ // if seed is 0, don't encrypt
             root.push().setValue(new ChatMessage(input.getText().toString(), user_name));
             // Clear the input
             input.setText("");
         } else {
-            codedText = bitShifter.Encrypt(input.getText().toString(), Integer.parseInt(seedInput.getText().toString()));
+            codedText = bitShifter.Encrypt(input.getText().toString(), Long.parseLong(seedInput.getText().toString()));
 
             // Read the input field and push a new instance
             // of ChatMessage to the Firebase database
@@ -242,7 +242,7 @@ public class Chat_Room extends AppCompatActivity {
             Intent intentChatRoom = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intentChatRoom);
         } else if(id==R.id.cat){
-            Toast.makeText(this,"Cat selected",Toast.LENGTH_SHORT).show(); // https://materialdesignicons.com/
+            Toast.makeText(this,"Cat selected",Toast.LENGTH_SHORT).show(); // https://materialdesignicons.com/       see menu -> main_menu.xml to see item layout
         } else if(id==R.id.qrcodescan){
             Toast.makeText(this,"QR code scan selected",Toast.LENGTH_SHORT).show(); // https://materialdesignicons.com/
         }
